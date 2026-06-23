@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import MultiSelect from '../components/MultiSelect'
+import MultiSelect from '../components/multiselect'
 
 const COLUMNS = [
   { key: 'dominio',        label: 'Domínio',          width: '200px' },

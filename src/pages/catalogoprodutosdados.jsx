@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { useReferenceData } from '../context/ReferenceDataContext'
-import MultiSelect from '../components/MultiSelect'
-import ProvisionamentoModal from '../components/ProvisionamentoModal'
+import { useReferenceData } from '../context/referencedatacontext'
+import MultiSelect from '../components/multiselect'
+import ProvisionamentoModal from '../components/provisionamentomodal'
 
 const STATUS_ORDER = [
   'A aguardar submissão pela BS',

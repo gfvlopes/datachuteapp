@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { useReferenceData } from '../context/ReferenceDataContext'
-import MultiSelect from '../components/MultiSelect'
+import { useReferenceData } from '../context/referencedatacontext'
+import MultiSelect from '../components/multiselect'
 
 const TIPO_COLORS = {
   'CRM':              { bg: 'rgba(161,181,216,0.18)', color: '#5A7BA8' },

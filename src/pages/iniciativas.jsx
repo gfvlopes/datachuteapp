@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { useReferenceData } from '../context/ReferenceDataContext'
-import MultiSelect from '../components/MultiSelect'
+import { useReferenceData } from '../context/referencedatacontext'
+import MultiSelect from '../components/multiselect'
 
 const UC_STATUS_COLORS = {
   'Sem produto de dados':        { bg: 'rgba(115,130,144,0.10)', color: '#9AA5AE' },
