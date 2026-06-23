@@ -16,7 +16,7 @@ const COLUMNS = [
 ]
 
 export default function Dominios() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([])  
   const [loading, setLoading] = useState(true)
   const [filterDominio, setFilterDominio] = useState([])
   const [filterSubdominio, setFilterSubdominio] = useState([])
