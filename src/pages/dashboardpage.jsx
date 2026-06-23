@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useReferenceData } from '../context/referencedatacontext'
-import MultiSelect from '../components/MultiSelect'
+import multiselect from '../components/multiselect'
 
 const STATUS_COLORS = {
   'A aguardar submissão pela BS':     '#94A3B0',
@@ -415,8 +415,8 @@ export default function DashboardPage() {
         <SectionTitle>Visão Iniciativas</SectionTitle>
 
         <FilterBar>
-          <MultiSelect options={dominioOwnerOptions} value={filterDominioOwner} onChange={setFilterDominioOwner} placeholder="Domínio Owner" />
-          <MultiSelect options={dominioRequisitanteOptions} value={filterDominioRequisitante} onChange={setFilterDominioRequisitante} placeholder="Domínio Requisitante" />
+          <multiselect options={dominioOwnerOptions} value={filterDominioOwner} onChange={setFilterDominioOwner} placeholder="Domínio Owner" />
+          <multiselect options={dominioRequisitanteOptions} value={filterDominioRequisitante} onChange={setFilterDominioRequisitante} placeholder="Domínio Requisitante" />
         </FilterBar>
 
         <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
@@ -502,19 +502,19 @@ export default function DashboardPage() {
         <SectionTitle>Visão Use Case</SectionTitle>
 
         <FilterBar>
-          <MultiSelect
+          <multiselect
             options={iniciativaOptions.map(([id, nome]) => `${id} — ${nome}`)}
             value={filterIniciativa.map(id => { const f = iniciativaOptions.find(([i]) => i === id); return f ? `${f[0]} — ${f[1]}` : id })}
             onChange={v => setFilterIniciativa(v.map(s => s.split(' — ')[0]))}
             placeholder="Iniciativa"
           />
-          <MultiSelect
+          <multiselect
             options={useCaseOptions.map(([id, nome]) => `${id} — ${nome}`)}
             value={filterUseCase.map(id => { const f = useCaseOptions.find(([i]) => i === id); return f ? `${f[0]} — ${f[1]}` : id })}
             onChange={v => setFilterUseCase(v.map(s => s.split(' — ')[0]))}
             placeholder="Use Case"
           />
-          <MultiSelect options={ucStatusOptions} value={filterUcStatus} onChange={setFilterUcStatus} placeholder="Status do Use Case" />
+          <multiselect options={ucStatusOptions} value={filterUcStatus} onChange={setFilterUcStatus} placeholder="Status do Use Case" />
         </FilterBar>
 
         {/* 6 cards em fluxo, mesmo tamanho, texto e cor alinhados à esquerda */}
@@ -595,8 +595,8 @@ export default function DashboardPage() {
         <SectionTitle>Visão Produto de Dados</SectionTitle>
 
         <FilterBar>
-          <MultiSelect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Produto de Dados" />
-          <MultiSelect options={dpStatusOptions} value={filterDpStatus} onChange={setFilterDpStatus} placeholder="Status do Produto de Dados" />
+          <multiselect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Produto de Dados" />
+          <multiselect options={dpStatusOptions} value={filterDpStatus} onChange={setFilterDpStatus} placeholder="Status do Produto de Dados" />
         </FilterBar>
 
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '20px' }}>

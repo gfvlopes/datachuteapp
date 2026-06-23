@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
-const ReferenceDataContext = createContext(null)
+const referencedatacontext = createContext(null)
 
 export function ReferenceDataProvider({ children }) {
   const [enumeracoes, setEnumeracoes] = useState({})
@@ -40,14 +40,14 @@ export function ReferenceDataProvider({ children }) {
   }, [])
 
   return (
-    <ReferenceDataContext.Provider value={{ enumeracoes, dominios, iniciativas, produtosDados, refetchProdutosDados, loading }}>
+    <referencedatacontext.Provider value={{ enumeracoes, dominios, iniciativas, produtosDados, refetchProdutosDados, loading }}>
       {children}
-    </ReferenceDataContext.Provider>
+    </referencedatacontext.Provider>
   )
 }
 
 export function useReferenceData() {
-  const ctx = useContext(ReferenceDataContext)
+  const ctx = useContext(referencedatacontext)
   if (!ctx) throw new Error('useReferenceData must be used within ReferenceDataProvider')
   return ctx
 }

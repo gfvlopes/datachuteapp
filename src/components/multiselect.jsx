@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function MultiSelect({ options, value, onChange, placeholder }) {
+export default function multiselect({ options, value, onChange, placeholder }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 

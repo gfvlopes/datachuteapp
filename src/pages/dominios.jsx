@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import MultiSelect from '../components/multiselect'
+import multiselect from '../components/multiselect'
 
 const COLUMNS = [
   { key: 'dominio',        label: 'Domínio',          width: '200px' },
@@ -60,11 +60,11 @@ export default function Dominios() {
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <MultiSelect options={dominioOptions} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterSubdominio([]); setFilterBusinessOwner([]); setFilterDataSteward([]); setFilterDataOwner([]) }} placeholder="Domínio" />
-        <MultiSelect options={subdominioOptions} value={filterSubdominio} onChange={v => { setFilterSubdominio(v); setFilterBusinessOwner([]); setFilterDataSteward([]); setFilterDataOwner([]) }} placeholder="Sub-Domínio" />
-        <MultiSelect options={businessOwnerOptions} value={filterBusinessOwner} onChange={setFilterBusinessOwner} placeholder="Business Owner" />
-        <MultiSelect options={dataStewardOptions} value={filterDataSteward} onChange={setFilterDataSteward} placeholder="Data Steward" />
-        <MultiSelect options={dataOwnerOptions} value={filterDataOwner} onChange={setFilterDataOwner} placeholder="Data Owner" />
+        <multiselect options={dominioOptions} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterSubdominio([]); setFilterBusinessOwner([]); setFilterDataSteward([]); setFilterDataOwner([]) }} placeholder="Domínio" />
+        <multiselect options={subdominioOptions} value={filterSubdominio} onChange={v => { setFilterSubdominio(v); setFilterBusinessOwner([]); setFilterDataSteward([]); setFilterDataOwner([]) }} placeholder="Sub-Domínio" />
+        <multiselect options={businessOwnerOptions} value={filterBusinessOwner} onChange={setFilterBusinessOwner} placeholder="Business Owner" />
+        <multiselect options={dataStewardOptions} value={filterDataSteward} onChange={setFilterDataSteward} placeholder="Data Steward" />
+        <multiselect options={dataOwnerOptions} value={filterDataOwner} onChange={setFilterDataOwner} placeholder="Data Owner" />
         {hasFilters && (
           <button onClick={clearFilters} style={{ padding: '7px 14px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#738290', fontSize: '12px', fontWeight: '500', cursor: 'pointer', fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
             Limpar filtros

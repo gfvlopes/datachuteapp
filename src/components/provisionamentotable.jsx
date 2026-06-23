@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { useReferenceData } from '../context/ReferenceDataContext'
-import ConfirmDialog from './ConfirmDialog'
+import { useReferenceData } from '../context/referencedatacontext'
+import confirmdialog from './confirmdialog'
 
 const STATUS_COLORS = {
   'A aguardar submissão pela BS':     { bg: 'rgba(115,130,144,0.12)', color: '#738290' },
@@ -50,7 +50,7 @@ const cellInputStyle = {
   fontFamily: 'Inter, sans-serif', width: '100%', boxSizing: 'border-box',
 }
 
-export default function ProvisionamentoTable(props) {
+export default function provisionamentotable(props) {
   const data = props.data || []
   const onEdit = props.onEdit || (() => {})
   const onDelete = props.onDelete || (() => {})
@@ -282,7 +282,7 @@ export default function ProvisionamentoTable(props) {
         </div>
       </div>
 
-      <ConfirmDialog isOpen={!!confirmDeleteId}
+      <confirmdialog isOpen={!!confirmDeleteId}
         message="Tens a certeza que queres eliminar esta associação? Esta ação não pode ser revertida."
         onConfirm={() => { onDelete(confirmDeleteId); setConfirmDeleteId(null) }}
         onCancel={() => setConfirmDeleteId(null)}

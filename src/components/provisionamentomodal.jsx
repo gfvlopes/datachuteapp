@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { useReferenceData } from '../context/ReferenceDataContext'
+import { useReferenceData } from '../context/referencedatacontext'
 
 const emptyForm = {
   id_iniciativa: '', nome_iniciativa: '',
@@ -32,7 +32,7 @@ const inputStyle = {
 
 const textareaStyle = { ...inputStyle, resize: 'vertical', minHeight: '72px', lineHeight: '1.5' }
 
-export default function ProvisionamentoModal({ isOpen, onClose, onSave, initialData }) {
+export default function provisionamentomodal({ isOpen, onClose, onSave, initialData }) {
   const { enumeracoes, dominios, iniciativas, produtosDados } = useReferenceData()
   const [form, setForm] = useState(emptyForm)
   const [originalStatus, setOriginalStatus] = useState('')
