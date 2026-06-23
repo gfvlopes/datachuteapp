@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { useReferenceData } from '../context/referencedatacontext'
-import multiselect from '../components/multiselect'
+import MultiSelect from '../components/multiselect'
 
 const TIPO_COLORS = {
   'CRM':              { bg: 'rgba(161,181,216,0.18)', color: '#5A7BA8' },
@@ -251,11 +251,11 @@ export default function Fontes() {
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <multiselect options={dominios} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterTipo([]); setFilterFormato([]); setFilterResponsavel([]); setFilterFrequencia([]) }} placeholder="Domínio" />
-        <multiselect options={tipoOptions} value={filterTipo} onChange={setFilterTipo} placeholder="Tipo de Fonte" />
-        <multiselect options={formatoOptions} value={filterFormato} onChange={setFilterFormato} placeholder="Formato" />
-        <multiselect options={frequenciaOptions} value={filterFrequencia} onChange={setFilterFrequencia} placeholder="Frequência" />
-        <multiselect options={responsavelOptions} value={filterResponsavel} onChange={setFilterResponsavel} placeholder="Responsável" />
+        <MultiSelect options={dominios} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterTipo([]); setFilterFormato([]); setFilterResponsavel([]); setFilterFrequencia([]) }} placeholder="Domínio" />
+        <MultiSelect options={tipoOptions} value={filterTipo} onChange={setFilterTipo} placeholder="Tipo de Fonte" />
+        <MultiSelect options={formatoOptions} value={filterFormato} onChange={setFilterFormato} placeholder="Formato" />
+        <MultiSelect options={frequenciaOptions} value={filterFrequencia} onChange={setFilterFrequencia} placeholder="Frequência" />
+        <MultiSelect options={responsavelOptions} value={filterResponsavel} onChange={setFilterResponsavel} placeholder="Responsável" />
         {hasFilters && (
           <button onClick={clearFilters} style={{ padding: '7px 14px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#738290', fontSize: '12px', fontWeight: '500', cursor: 'pointer', fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
             Limpar filtros

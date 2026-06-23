@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { useReferenceData } from '../context/referencedatacontext'
-import multiselect from '../components/multiselect'
-import provisionamentomodal from '../components/provisionamentomodal'
+import MultiSelect from '../components/multiselect'
+import ProvisionamentoModal from '../components/provisionamentomodal'
 
 const STATUS_ORDER = [
   'A aguardar submissão pela BS',
@@ -164,10 +164,10 @@ export default function CatalogoProdutosDados() {
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <multiselect options={dominioOptions} value={filterDominio} onChange={setFilterDominio} placeholder="Domínio Owner" />
-        <multiselect options={tipologiaOptions} value={filterTipologia} onChange={setFilterTipologia} placeholder="Tipologia" />
-        <multiselect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Produto de Dados" />
-        <multiselect options={statusOptions} value={filterStatus} onChange={setFilterStatus} placeholder="Status" />
+        <MultiSelect options={dominioOptions} value={filterDominio} onChange={setFilterDominio} placeholder="Domínio Owner" />
+        <MultiSelect options={tipologiaOptions} value={filterTipologia} onChange={setFilterTipologia} placeholder="Tipologia" />
+        <MultiSelect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Produto de Dados" />
+        <MultiSelect options={statusOptions} value={filterStatus} onChange={setFilterStatus} placeholder="Status" />
         {hasFilters && (
           <button onClick={clearFilters} style={{ padding: '7px 14px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#738290', fontSize: '12px', fontWeight: '500', cursor: 'pointer', fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
             Limpar filtros
@@ -225,7 +225,7 @@ export default function CatalogoProdutosDados() {
         </>
       )}
 
-      <provisionamentomodal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSave={handleSave} initialData={null} />
+      <ProvisionamentoModal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSave={handleSave} initialData={null} />
     </div>
   )
 }

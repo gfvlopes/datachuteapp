@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import multiselect from '../components/multiselect'
+import MultiSelect from '../components/multiselect'
 
 const STATUS_ORDER = [
   'Pendente UN',
@@ -469,12 +469,12 @@ export default function Atributos() {
 
       {/* Filtros */}
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <multiselect options={dominioOptions} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterSubdominio([]) }} placeholder="Domínios" />
-        <multiselect options={subdominioOptions} value={filterSubdominio} onChange={setFilterSubdominio} placeholder="Sub Domínios" />
-        <multiselect options={sistemaOptions} value={filterSistema} onChange={setFilterSistema} placeholder="Sistema UN" />
-        <multiselect options={statusOptions} value={filterStatus} onChange={setFilterStatus} placeholder="Status" />
-        <multiselect options={produtosOptions.map(p => p.id)} value={filterProduto} onChange={v => { setFilterProduto(v); setFilterCaderno([]) }} placeholder="Produto de Dados" />
-        <multiselect
+        <MultiSelect options={dominioOptions} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterSubdominio([]) }} placeholder="Domínios" />
+        <MultiSelect options={subdominioOptions} value={filterSubdominio} onChange={setFilterSubdominio} placeholder="Sub Domínios" />
+        <MultiSelect options={sistemaOptions} value={filterSistema} onChange={setFilterSistema} placeholder="Sistema UN" />
+        <MultiSelect options={statusOptions} value={filterStatus} onChange={setFilterStatus} placeholder="Status" />
+        <MultiSelect options={produtosOptions.map(p => p.id)} value={filterProduto} onChange={v => { setFilterProduto(v); setFilterCaderno([]) }} placeholder="Produto de Dados" />
+        <MultiSelect
           options={filterProduto.length
             ? cadernos.filter(c => filterProduto.includes(c.id_produto_dados)).map(c => c.id_caderno)
             : cadernos.map(c => c.id_caderno)}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useReferenceData } from '../context/referencedatacontext'
-import multiselect from '../components/multiselect'
+import MultiSelect from '../components/multiselect'
 
 const UC_STATUS_COLORS = {
   'Sem produto de dados':        { bg: 'rgba(115,130,144,0.10)', color: '#9AA5AE' },
@@ -154,9 +154,9 @@ export default function Iniciativas() {
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <multiselect options={dominioOptions} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterIniciativa([]) }} placeholder="Domínio Owner" />
-        <multiselect options={iniciativaOptions} value={filterIniciativa} onChange={setFilterIniciativa} placeholder="Iniciativa" />
-        <multiselect options={ucStatusOptions} value={filterUcStatus} onChange={setFilterUcStatus} placeholder="Status" />
+        <MultiSelect options={dominioOptions} value={filterDominio} onChange={v => { setFilterDominio(v); setFilterIniciativa([]) }} placeholder="Domínio Owner" />
+        <MultiSelect options={iniciativaOptions} value={filterIniciativa} onChange={setFilterIniciativa} placeholder="Iniciativa" />
+        <MultiSelect options={ucStatusOptions} value={filterUcStatus} onChange={setFilterUcStatus} placeholder="Status" />
         {hasFilters && (
           <button onClick={clearFilters} style={{ padding: '7px 14px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#738290', fontSize: '12px', fontWeight: '500', cursor: 'pointer', fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
             Limpar filtros

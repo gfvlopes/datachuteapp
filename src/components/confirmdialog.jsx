@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function confirmdialog({ isOpen, message, onConfirm, onCancel }) {
+export default function ConfirmDialog({ isOpen, message, onConfirm, onCancel }) {
   if (!isOpen) return null
 
   return (

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { useReferenceData } from '../context/referencedatacontext'
-import provisionamentotable from '../components/provisionamentotable'
-import provisionamentomodal from '../components/provisionamentomodal'
-import multiselect from '../components/multiselect'
+import ProvisionamentoTable from '../components/provisionamentotable'
+import ProvisionamentoModal from '../components/provisionamentomodal'
+import MultiSelect from '../components/multiselect'
 
 const STATUS_ORDER = [
   'A aguardar submissão pela BS',
@@ -225,13 +225,13 @@ export default function Provisionamento(props) {
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <multiselect
+        <MultiSelect
           options={dominioOptions}
           value={filterDominio}
           onChange={setFilterDominio}
           placeholder="Domínio"
         />
-        <multiselect
+        <MultiSelect
           options={iniciativaOptions.map(([id, nome]) => `${id} — ${nome}`)}
           value={filterIniciativa.map(id => {
             const found = iniciativaOptions.find(([i]) => i === id)
@@ -240,7 +240,7 @@ export default function Provisionamento(props) {
           onChange={v => setFilterIniciativa(v.map(s => s.split(' — ')[0]))}
           placeholder="Iniciativa"
         />
-        <multiselect
+        <MultiSelect
           options={useCaseOptions.map(o => `${o.id} — ${o.nome}`)}
           value={filterUseCase.map(id => {
             const found = useCaseOptions.find(o => o.id === id)
@@ -249,13 +249,13 @@ export default function Provisionamento(props) {
           onChange={v => setFilterUseCase(v.map(s => s.split(' — ')[0]))}
           placeholder="Use Case"
         />
-        <multiselect
+        <MultiSelect
           options={produtoOptions}
           value={filterProduto}
           onChange={setFilterProduto}
           placeholder="Produto de Dados"
         />
-        <multiselect
+        <MultiSelect
           options={statusOptions}
           value={filterStatus}
           onChange={setFilterStatus}
@@ -285,7 +285,7 @@ export default function Provisionamento(props) {
             <div style={{ height: '1px', minWidth: '2800px' }} />
           </div>
 
-          <provisionamentotable
+          <ProvisionamentoTable
             data={filtered}
             onEdit={handleEdit}
             onDelete={handleDelete}
@@ -296,7 +296,7 @@ export default function Provisionamento(props) {
         </>
       )}
 
-      <provisionamentomodal
+      <ProvisionamentoModal
         isOpen={modalOpen}
         onClose={() => { setModalOpen(false); setEditingRow(null); fetchData() }}
         onSave={handleSave}

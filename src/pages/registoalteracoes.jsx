@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import multiselect from '../components/multiselect'
+import MultiSelect from '../components/multiselect'
 import { useReferenceData } from '../context/referencedatacontext'
 
 const STATUS_COLORS = {
@@ -125,10 +125,10 @@ export default function RegistoAlteracoes({ filterDominio, setFilterDominio, fil
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <multiselect options={dominioOptions} value={filterDominio} onChange={setFilterDominio} placeholder="Domínio" />
-        <multiselect options={iniciativaOptions.map(([id, nome]) => `${id} — ${nome}`)} value={filterIniciativa.map(id => { const f = iniciativaOptions.find(([i]) => String(i) === id); return f ? `${f[0]} — ${f[1]}` : id })} onChange={v => setFilterIniciativa(v.map(s => s.split(' — ')[0]))} placeholder="Iniciativa" />
-        <multiselect options={useCaseOptions.map(o => `${o.id} — ${o.nome}`)} value={filterUseCase.map(id => { const f = useCaseOptions.find(o => o.id === id); return f ? `${f.id} — ${f.nome}` : id })} onChange={v => setFilterUseCase(v.map(s => s.split(' — ')[0]))} placeholder="Use Case" />
-        <multiselect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Data Product" />
+        <MultiSelect options={dominioOptions} value={filterDominio} onChange={setFilterDominio} placeholder="Domínio" />
+        <MultiSelect options={iniciativaOptions.map(([id, nome]) => `${id} — ${nome}`)} value={filterIniciativa.map(id => { const f = iniciativaOptions.find(([i]) => String(i) === id); return f ? `${f[0]} — ${f[1]}` : id })} onChange={v => setFilterIniciativa(v.map(s => s.split(' — ')[0]))} placeholder="Iniciativa" />
+        <MultiSelect options={useCaseOptions.map(o => `${o.id} — ${o.nome}`)} value={filterUseCase.map(id => { const f = useCaseOptions.find(o => o.id === id); return f ? `${f.id} — ${f.nome}` : id })} onChange={v => setFilterUseCase(v.map(s => s.split(' — ')[0]))} placeholder="Use Case" />
+        <MultiSelect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Data Product" />
         {hasFilters && (
           <button onClick={clearFilters} style={{ padding: '7px 14px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#738290', fontSize: '12px', fontWeight: '500', cursor: 'pointer', fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
             Limpar filtros
