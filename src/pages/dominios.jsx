@@ -3,16 +3,13 @@ import { supabase } from '../lib/supabase'
 import MultiSelect from '../components/multiselect'
 
 const COLUMNS = [
-  { key: 'dominio',        label: 'Domínio',          width: '200px' },
-  { key: 'subdominio',     label: 'Sub-Domínio',       width: '200px' },
-  { key: 'descricao',      label: 'Descrição',         width: '260px' },
-  { key: 'exemplos',       label: 'Exemplos',          width: '220px' },
-  { key: 'tm_forum_map',   label: 'TM Forum Map',      width: '140px' },
-  { key: 'tmforum_map',    label: 'TMForum (DS)',      width: '140px' },
+  { key: 'dominio',        label: 'Domínio',          width: '260px' },
+  { key: 'subdominio',     label: 'Sub-Domínio',       width: '220px' },
+  { key: 'descricao',      label: 'Descrição',         width: '280px' },
   { key: 'area_ownership', label: 'Área Ownership',    width: '200px' },
   { key: 'business_owner', label: 'Business Owner',    width: '160px' },
-  { key: 'data_steward',   label: 'Data Steward',      width: '160px' },
   { key: 'data_owner',     label: 'Data Owner',        width: '160px' },
+  { key: 'data_steward',   label: 'Data Steward',      width: '160px' },
 ]
 
 export default function Dominios() {
@@ -27,10 +24,27 @@ export default function Dominios() {
   const tableWrapRef = useRef(null)
 
   useEffect(() => {
-    supabase.from('d_dominio_do').select('*').order('dominio').order('subdominio').then(({ data: rows, error }) => {
-      if (!error) setData(rows || [])
-      setLoading(false)
-    })
+    supabase
+      .from('d_sub_dominios')
+      .select('id, nome, data_steward, dominio_id, d_dominios(id, nome, business_owner, data_owner, descricao, area_ownership)')
+      .order('nome')
+      .then(({ data: rows, error }) => {
+        if (!error && rows) {
+          // Flatten para manter compatibilidade com a tabela
+          const flat = rows.map(r => ({
+            id:            r.id,
+            dominio:       r.d_dominios?.nome || '—',
+            subdominio:    r.nome,
+            data_steward:  r.data_steward,
+            business_owner: r.d_dominios?.business_owner,
+            data_owner:    r.d_dominios?.data_owner,
+            descricao:     r.d_dominios?.descricao,
+            area_ownership: r.d_dominios?.area_ownership,
+          }))
+          setData(flat)
+        }
+        setLoading(false)
+      })
   }, [])
 
   const dominioOptions = [...new Set(data.map(r => r.dominio).filter(Boolean))].sort()
@@ -55,7 +69,7 @@ export default function Dominios() {
   return (
     <div style={{ padding: '32px 36px', fontFamily: 'Inter, sans-serif' }}>
       <div style={{ marginBottom: '20px' }}>
-        <h1 style={{ fontSize: '20px', fontWeight: '700', color: '#2C3A42', margin: 0 }}>Catálogo — Domínios</h1>
+        <h1 style={{ fontSize: '20px', fontWeight: '700', color: '#2C3A42', margin: 0 }}>Domínios e Sub Domínios</h1>
         <p style={{ fontSize: '13px', color: '#738290', margin: '4px 0 0' }}>Mapa de domínios e sub-domínios de informação</p>
       </div>
 

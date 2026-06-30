@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import MultiSelect from '../components/multiselect'
+import multiselect from '../components/multiselect'
 import { useReferenceData } from '../context/referencedatacontext'
 
 const STATUS_COLORS = {
@@ -116,6 +116,10 @@ export default function RegistoAlteracoes({ filterDominio, setFilterDominio, fil
   const hasFilters = !!(filterDominio.length || filterIniciativa.length || filterUseCase.length || filterProduto.length)
   const clearFilters = () => { setFilterDominio([]); setFilterIniciativa([]); setFilterUseCase([]); setFilterProduto([]) }
 
+  const [visibleCount, setVisibleCount] = useState(50)
+  useEffect(() => { setVisibleCount(50) }, [filterDominio, filterIniciativa, filterUseCase, filterProduto])
+  const visible = filtered.slice(0, visibleCount)
+
   return (
     <div style={{ padding: '32px 36px', fontFamily: 'Inter, sans-serif' }}>
 
@@ -125,10 +129,10 @@ export default function RegistoAlteracoes({ filterDominio, setFilterDominio, fil
       </div>
 
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <MultiSelect options={dominioOptions} value={filterDominio} onChange={setFilterDominio} placeholder="Domínio" />
-        <MultiSelect options={iniciativaOptions.map(([id, nome]) => `${id} — ${nome}`)} value={filterIniciativa.map(id => { const f = iniciativaOptions.find(([i]) => String(i) === id); return f ? `${f[0]} — ${f[1]}` : id })} onChange={v => setFilterIniciativa(v.map(s => s.split(' — ')[0]))} placeholder="Iniciativa" />
-        <MultiSelect options={useCaseOptions.map(o => `${o.id} — ${o.nome}`)} value={filterUseCase.map(id => { const f = useCaseOptions.find(o => o.id === id); return f ? `${f.id} — ${f.nome}` : id })} onChange={v => setFilterUseCase(v.map(s => s.split(' — ')[0]))} placeholder="Use Case" />
-        <MultiSelect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Data Product" />
+        <multiselect options={dominioOptions} value={filterDominio} onChange={setFilterDominio} placeholder="Domínio" />
+        <multiselect options={iniciativaOptions.map(([id, nome]) => `${id} — ${nome}`)} value={filterIniciativa.map(id => { const f = iniciativaOptions.find(([i]) => String(i) === id); return f ? `${f[0]} — ${f[1]}` : id })} onChange={v => setFilterIniciativa(v.map(s => s.split(' — ')[0]))} placeholder="Iniciativa" />
+        <multiselect options={useCaseOptions.map(o => `${o.id} — ${o.nome}`)} value={filterUseCase.map(id => { const f = useCaseOptions.find(o => o.id === id); return f ? `${f.id} — ${f.nome}` : id })} onChange={v => setFilterUseCase(v.map(s => s.split(' — ')[0]))} placeholder="Use Case" />
+        <multiselect options={produtoOptions} value={filterProduto} onChange={setFilterProduto} placeholder="Data Product" />
         {hasFilters && (
           <button onClick={clearFilters} style={{ padding: '7px 14px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#738290', fontSize: '12px', fontWeight: '500', cursor: 'pointer', fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
             Limpar filtros
@@ -161,7 +165,7 @@ export default function RegistoAlteracoes({ filterDominio, setFilterDominio, fil
                   {filtered.length === 0 && (
                     <tr><td colSpan={COLUMNS.length} style={{ padding: '48px 24px', textAlign: 'center', color: '#738290', fontSize: '13px' }}>Nenhuma alteração registada ainda.</td></tr>
                   )}
-                  {filtered.map((row, idx) => (
+                  {visible.map((row, idx) => (
                     <tr key={row.id}
                       style={{ background: idx % 2 === 0 ? '#FFFFFF' : '#FAFBFC', transition: 'background 0.1s' }}
                       onMouseEnter={e => e.currentTarget.style.background = '#F3F6FB'}
@@ -196,6 +200,19 @@ export default function RegistoAlteracoes({ filterDominio, setFilterDominio, fil
               </table>
             </div>
           </div>
+          {filtered.length > visibleCount && (
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '14px' }}>
+              <button onClick={() => setVisibleCount(c => c + 50)}
+                style={{ padding: '9px 20px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', color: '#5A7BA8', fontSize: '13px', fontWeight: '600', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}
+                onMouseEnter={e => e.currentTarget.style.background = '#F5F8FC'}
+                onMouseLeave={e => e.currentTarget.style.background = '#FFFFFF'}>
+                Mostrar mais ({filtered.length - visibleCount} restantes)
+              </button>
+            </div>
+          )}
+          <p style={{ fontSize: '11px', color: '#B0BCC8', marginTop: '8px' }}>
+            A mostrar {visible.length} de {filtered.length} registo{filtered.length !== 1 ? 's' : ''}
+          </p>
         </>
       )}
     </div>

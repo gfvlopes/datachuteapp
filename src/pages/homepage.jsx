@@ -2,14 +2,14 @@ import React from 'react'
 
 const CARDS = [
   {
-    id: 'dominios',
+    id: 'iniciativas',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
       </svg>
     ),
-    label: 'Catálogo de Informação',
-    description: 'Consulta domínios, iniciativas, produtos de dados e sistemas fonte. O ponto de entrada para perceber o que existe e como está organizado.',
+    label: 'Catálogo de Iniciativas',
+    description: 'Consulta toda a hierarquia de artefactos: iniciativas, use cases e produtos de dados. O ponto de entrada para perceber o que existe e como está organizado.',
     accent: '#A1B5D8',
     accentBg: 'rgba(161,181,216,0.10)',
     accentBorder: 'rgba(161,181,216,0.35)',
@@ -23,7 +23,7 @@ const CARDS = [
       </svg>
     ),
     label: 'Gerir Produtos de Dados',
-    description: 'Acompanha o estado de todos os produtos de dados por iniciativa e use case. Actualiza status e regista alterações.',
+    description: 'Acompanha o estado de todos os produtos de dados por iniciativa e use case. Actualiza status e regista alterações. Clica num produto para ver o seu detalhe completo.',
     accent: '#B5A8D8',
     accentBg: 'rgba(181,168,216,0.10)',
     accentBorder: 'rgba(181,168,216,0.35)',
@@ -46,21 +46,6 @@ const CARDS = [
     action: 'openProvisionamento',
   },
   {
-    id: 'caderno-requisitos',
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-      </svg>
-    ),
-    label: 'Criar Ficha Técnica',
-    description: 'Inicia o levantamento de atributos para um produto de dados. Colabora com o UN Business Owner e regista os dados necessários.',
-    accent: '#5C8F6A',
-    accentBg: 'rgba(92,143,106,0.10)',
-    accentBorder: 'rgba(92,143,106,0.30)',
-    accentText: '#2A6040',
-    action: 'openCaderno',
-  },
-  {
     id: 'atributos',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -69,7 +54,7 @@ const CARDS = [
       </svg>
     ),
     label: 'Gerir Atributos em Catálogo',
-    description: 'Gere o estado de catalogação dos atributos gold. Avança atributos de "Pendente UN" até "Disponível" com validação de cada camada.',
+    description: 'Gere o estado de catalogação dos atributos gold. Avança atributos de "Mapeamento Sistema Fonte UN" até "Disponível" com validação de cada camada.',
     accent: '#D8B5A8',
     accentBg: 'rgba(216,181,168,0.10)',
     accentBorder: 'rgba(216,181,168,0.35)',
@@ -77,14 +62,11 @@ const CARDS = [
   },
 ]
 
-export default function HomePage({ onNavigate, onOpenProvisionamento, onOpenCaderno }) {
+export default function HomePage({ onNavigate, onOpenProvisionamento }) {
   const handleCard = (card) => {
     if (card.action === 'openProvisionamento') {
       onNavigate('provisionamento-acompanhamento')
       setTimeout(() => onOpenProvisionamento && onOpenProvisionamento(), 100)
-    } else if (card.action === 'openCaderno') {
-      onNavigate('caderno-requisitos')
-      setTimeout(() => onOpenCaderno && onOpenCaderno(), 100)
     } else {
       onNavigate(card.id)
     }
