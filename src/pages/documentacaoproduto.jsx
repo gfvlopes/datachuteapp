@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { useReferenceData } from '../context/referencedatacontext'
 import { CadernoDetalhe } from './cadernorequisitos'
 import Atributos from './atributos'
+import SingleSelect from '../components/singleselect'
 
 const STATUS_ORDER = [
   'A aguardar submissão pela BS', 'Por iniciar (DSG)', 'Levantamento de requisitos (DSG)',
@@ -168,7 +169,7 @@ export default function DocumentacaoProduto({ produto, onBack }) {
 
     const { data: atrs } = await supabase
       .from('d_ficha_atributos')
-      .select('id, id_catalogo_atributo, d_catalogo_atributos(*)')
+      .select('id, id_catalogo_atributo, nome_atributo, descricao_atributo, sistema_referencia, nome_atributo_gold, descricao_atributo_gold, sistema_referencia_gold, d_catalogo_atributos(*)')
       .eq('produto_dados_id', produto.id)
     setAtributos(atrs || [])
 
@@ -232,13 +233,21 @@ export default function DocumentacaoProduto({ produto, onBack }) {
     await fetchRegistos()
   }
 
+  // Uma linha conta como "atributo levantado" se tiver algum conteúdo (não é uma linha vazia recém-criada)
+  const linhaPreenchida = (a) => {
+    if (a.id_catalogo_atributo) return true
+    const campos = ['nome_atributo', 'descricao_atributo', 'sistema_referencia', 'nome_atributo_gold', 'descricao_atributo_gold', 'sistema_referencia_gold']
+    return campos.some(c => a[c] && String(a[c]).trim() !== '')
+  }
+  const atributosLevantados = atributos.filter(linhaPreenchida)
+
   const completude = SECOES_COMPLETUDE.map(sec => {
-    const preenchidos = atributos.filter(a => {
+    const preenchidos = atributosLevantados.filter(a => {
       const cat = a.d_catalogo_atributos
       if (!cat) return false
       return sec.campos.every(c => cat[c] && String(cat[c]).trim() !== '')
     }).length
-    const total = atributos.length
+    const total = atributosLevantados.length
     return { ...sec, preenchidos, total, pct: total > 0 ? Math.round((preenchidos / total) * 100) : 0 }
   })
 
@@ -326,10 +335,7 @@ export default function DocumentacaoProduto({ produto, onBack }) {
                   {/* Estado do produto — destacado, em primeiro */}
                   <div style={{ padding: '12px 0 14px', borderBottom: '1px solid #F2F4F7', marginBottom: '2px' }}>
                     <span style={{ fontSize: '9px', fontWeight: '700', color: '#5A7BA8', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '6px' }}>Estado do Produto de Dados</span>
-                    <select value={status} onChange={e => pedirMudancaStatus(e.target.value)}
-                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1.5px solid #E0E5EC', background: '#FFFFFF', fontSize: '13px', fontWeight: '600', color: '#2C3A42', cursor: 'pointer', fontFamily: 'Inter, sans-serif', outline: 'none' }}>
-                      {statusOpts.map(s => <option key={s} value={s}>{s}</option>)}
-                    </select>
+                    <SingleSelect options={statusOpts} value={status} onChange={(v) => { if (v !== status) pedirMudancaStatus(v) }} placeholder="Seleccionar estado" minWidth="100%" />
                   </div>
 
                   <CampoEditavel label="ID Produto Dados"     value={dados?.id_produto_dados}   onSave={v => saveCampo('id_produto_dados', v)} />
@@ -412,7 +418,7 @@ export default function DocumentacaoProduto({ produto, onBack }) {
                   {/* 3 métricas */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
                     {[
-                      { valor: atributos.length, label: 'Nº Atributos Levantados' },
+                      { valor: atributosLevantados.length, label: 'Nº Atributos Levantados' },
                       { valor: numSistemasUN,    label: 'Nº Sistemas UN' },
                       { valor: numIniciativas,   label: 'Nº Iniciativas Associadas' },
                     ].map((m, i) => (

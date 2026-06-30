@@ -2,11 +2,12 @@ import React from 'react'
 
 const navItems = [
   { id: 'home',                           label: 'Home' },
-  { id: 'dominios',                       label: 'Domínios e Subdomínios' },
-  { id: 'iniciativas',                    label: 'Iniciativas e Use Cases' },
+  { id: 'dominios',                       label: 'Domínios e subdomínios' },
+  { id: 'iniciativas',                    label: 'Iniciativas e use cases' },
   { id: 'provisionamento-acompanhamento', label: 'Produto de Dados' },
   { id: 'atributos',                      label: 'Atributos' },
   { id: 'fontes',                         label: 'Sistemas UN' },
+  { id: 'dashboard',                      label: 'Dashboard' },
 ]
 
 export default function Sidebar({ activePage, onNavigate }) {
